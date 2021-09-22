@@ -1,53 +1,36 @@
 {
-  "name": "tenancy_front",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
-  },
-  "dependencies": {
-    "@material/button": "^11.0.0",
-    "axios": "^0.21.1",
-    "core-js": "^3.6.5",
-    "material-design-icons-iconfont": "^6.1.0",
-    "vue": "^2.6.11",
-    "vue-router": "^3.2.0",
-    "vuetify": "^2.4.0"
-  },
-  "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-plugin-router": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^6.2.2",
-    "font-awesome": "^4.7.0",
-    "sass": "^1.32.0",
-    "sass-loader": "^10.0.0",
-    "vue-cli-plugin-vuetify": "~2.4.0",
-    "vue-template-compiler": "^2.6.11",
-    "vuetify-loader": "^1.7.0"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
+    "private": true,
+    "scripts": {
+        "dev": "npm run development",
+        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "watch": "npm run development -- --watch",
+        "watch-poll": "npm run watch -- --watch-poll",
+        "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --disable-host-check --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "prod": "npm run production",
+        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
-    "parserOptions": {
-      "parser": "babel-eslint"
+    "devDependencies": {
+        "axios": "^0.19",
+        "bootstrap": "^4.0.0",
+        "cross-env": "^7.0",
+        "jquery": "^3.2",
+        "laravel-mix": "^5.0.1",
+        "lodash": "^4.17.19",
+        "popper.js": "^1.12",
+        "resolve-url-loader": "^2.3.1",
+        "sass": "^1.20.1",
+        "sass-loader": "^8.0.0",
+        "vue-loader": "^15.9.7",
+        "vue-template-compiler": "^2.6.14"
     },
-    "rules": {}
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ]
+  
+    "dependencies": {
+        "bootstrap": "^5.0.2",
+        "bootstrap-vue": "^2.21.2",
+        "vue": "^2.6.14",
+        "vue-good-table": "^2.21.10",
+        "vue-tables-2": "^2.3.1",
+        "vuetable-2": "^2.0.0-beta.4"
+    }
+
 }
