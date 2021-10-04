@@ -93,10 +93,7 @@
 
                      
 
-                    @can('liste contacts')
-                    <li><a class="slide-item" href="{{ url('/' . ($page = 'employees')) }}">Employés </a>
-                    </li>
-                    @endcan 
+                   
                     @can('liste contacts')
                         <li><a class="slide-item" href="{{ url('/' . ($page = 'zones')) }}">Zones </a>
                         </li>

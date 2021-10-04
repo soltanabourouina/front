@@ -93,10 +93,7 @@
 
                      
 
-                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('liste contacts')): ?>
-                    <li><a class="slide-item" href="<?php echo e(url('/' . ($page = 'employees'))); ?>">Employés </a>
-                    </li>
-                    <?php endif; ?> 
+                   
                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('liste contacts')): ?>
                         <li><a class="slide-item" href="<?php echo e(url('/' . ($page = 'zones'))); ?>">Zones </a>
                         </li>

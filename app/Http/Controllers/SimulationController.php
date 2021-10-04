@@ -133,13 +133,17 @@ class SimulationController extends Controller
     {
         $simulation = Simulation::findOrFail($simulation_id);
         $payrollsByMonth = $simulation->getPayrollRows();
-        BudgetPayrollRow::truncate();
+       // BudgetPayrollRow::truncate(); pourquoi vider la table ?
+       
+        $simulation = Simulation::findOrFail($simulation_id);
+        $simulation_code = $simulation->code;
         foreach ($payrollsByMonth as $item) {
             $rows = $item["rows"];
             foreach ($rows as $row) {
                 BudgetPayrollRow::create([
                     "year" => $row->year,
                     "month" => $row->month,
+                    "numbud" => $simulation_code,
                     "employee_ref" => $row->employee_ref,
                     "code_regroupement_secondaire" => $row->code_regroupement_secondaire,
                     "amount" => $row->amount,

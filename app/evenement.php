@@ -32,7 +32,7 @@ class evenement extends Model
    {
    return $this->belongsTo('App\CodeRegroupementSecondaire');
    }
-   public function categorie()
+   public function catpro()
    {
    return $this->belongsTo('App\categories_professionnel');
    }

@@ -5,8 +5,29 @@
     .ui-datepicker-calendar {
     display: none;
     }
+
+    #colorone {
+    background-color: #00d2fc;
+    color: #000000;
+   }
+
+   #colortwo {
+    background-color: #4ffbdf;
+    color: #000000;
+   }
+
+   #colorthree {
+    background-color: #9ad4d0;
+    color: #000000;
+   }
+
+   #colorfour {
+    background-color: #fbeaff;
+    color: #000000;
+   }
 </style>
-    <!--Internal   Notify -->
+
+  <!--Internal   Notify -->
     <link href="{{ URL::asset('assets/plugins/notify/css/notifIt.css') }}" rel="stylesheet" />
 @section('title')
 Budget|scenarii|projection
@@ -133,7 +154,7 @@ Budget|scenarii|projection
                         {{$budgetM10 = Helpers::showMonetaryValue($budM10->Sum('amount'))}}
                         {{$budgetM11 = Helpers::showMonetaryValue($budM11->Sum('amount'))}}
                         {{$budgetM12 = Helpers::showMonetaryValue($budM12->Sum('amount'))}}
-                        <td width=10% >Budget initiale</td>
+                        <td width=10% >Budget initial</td>
                         <td>{{($budgetM1) }}</td>
                         <td>{{$budgetM2}}</td>
                         <td>{{$budgetM3}}</td>
@@ -153,23 +174,8 @@ Budget|scenarii|projection
                       
                     </tr>
 <!--effectif-->
-<td width=10% >Effectif initiale</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>8</td>
-                        <td>8</td>
-                        <td>8</td>
-                        <td>8</td>
-                        <td>8</td>
-                        <td>8</td>
-                        <td>8</td>
+<td width=10% >Effectif initial</td>
+             
                    
                         <TR>
                             <TD  colspan=2  bgcolor="#FFD700">Suivi</TD>
@@ -198,24 +204,9 @@ Budget|scenarii|projection
                             </TR>
 
 
-                            <TR >
+                            <TR>
                                 <td>EFF</td>
-<td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>0</td>
-                        <td>8</td>
-                        <td>8</td>
-                        <td>8</td>
-                        <td>8</td>
-                        <td>8</td>
-                        <td>8</td>
-                        <td>8</td>
+
                             </TR>
                             </TR> 
 
@@ -265,7 +256,7 @@ aria-hidden="true">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <form action="{{ route('scenarii.store_ev') }}" method="post">
+        <form action="{{ route('scenarii.store') }}" method="post">
             {{ csrf_field() }}
             
                 <div class="col-md-10">
@@ -303,7 +294,7 @@ aria-hidden="true">
 <br>
                 <div id="csp_id" class="col-lg-10" hidden>
                 <label for="csp">Catégorie Socio-pro</label>
-                <select name="csp" id="csp" class="form-control" required>
+                <select name="csp_id" id="csp_id" class="form-control" required>
                     <option value="" selected disabled> --indiquer le CSP--</option>
                     @foreach ($csociopros as $key => $csociopro)
                         <option value="{{ $csociopro->id }}">{{ $csociopro->abreviation}}-{{$csociopro->libelle }}</option>
@@ -313,7 +304,7 @@ aria-hidden="true">
 
                 <div id="cat_id" class="col-lg-10" hidden>
                     <label for="catpro">Catégorie pro</label>
-                    <select name="catpro" id="catpro" class="form-control" required>
+                    <select name="catpro_id" id="catpro_id" class="form-control" required>
                         <option value="" selected disabled> --indiquer la catégorie--</option>
                        @foreach ($catprofs as $key => $catprof)
                             <option value="{{ $catprof->id }}">{{ $catprof->code }}-{{ $catprof->nom }}</option>
@@ -334,7 +325,7 @@ aria-hidden="true">
 <br>
                     <div id="bud_id" class="col-lg-10" >
                     <label for="codebud">Code Budget</label>
-                    <select name="codebud" id="codebud" class="form-control" required>
+                    <select name="codebud_id" id="codebud_id" class="form-control" required>
                         <option value="" selected disabled> --indiquer le code budgétaire--</option>
                         @foreach ($coderegsegs as $key => $coderegseg)
                             <option value="{{ $coderegseg->id }}">{{ $coderegseg->abreviation }}-{{ $coderegseg->libelle_secondaires}}</option>
@@ -351,11 +342,11 @@ aria-hidden="true">
                
                     <div class="form-group col-lg-6">
                     <label for="annee">Année *</label>
-                    <input class="annee form-control" required  type="text">
+                    <input class="annee form-control" required id="annee" name="annee" type="number">
                 </div>
                 <div class="form-group col-lg-6">
                     <label for="montant">mois *</label>
-                    <input class="mois form-control" required  type="text">
+                    <input class="mois form-control" required  id="mois" name="mois" type="number">
                 </div>
                     <div class="form-group col-lg-6">
                     <label for="duree_estime" >Durée</label>
@@ -369,7 +360,6 @@ aria-hidden="true">
              
 
                
-            </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-success">Valider</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
@@ -405,16 +395,17 @@ aria-hidden="true">
                               
                                 <th>#</th>
 							
-                                <th>Matricule </th>
+                                <th>Population / Matricule </th>
                                 
-                                <th>CSP</th>
-                                <th>Cat pro</th>
-                                <th>Service</th>
+                                <th>Filtre sur: </th>
+                              
+
                                 <th>Code budget</th>
-                                <th>Montant</th>
+                               
                                 <th>Année</th>
                                 <th>Mois</th>
                                 <th>Durée</th>
+                                <th>Montant</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -423,15 +414,36 @@ aria-hidden="true">
                             @foreach ($events as $event)
                                      <tr>
                                     <td>{{ ++$i }}</td>
+{{-- choix population matricule ou popul --}}
+                                    @if( $event->choixpop == 1)
+                                    <td>{{ $event->matricule}}</td>
+                                    @elseif( $event->choixpop == 2)
+                                    <td>{{ $event->popul}}</td>
+                                    @endif 
+{{-- filtre sur csp,codebud(coderegroupementsec),categorie --}}
+
+@if ($event->popul == "cat") 
+<td id="colorone">{{$event->catpro->nom}}</td>
+
+@elseif($event->popul == "csp") 
+<td id="colortwo">{{ $event->csp->libelle }}</td>
+
+@elseif($event->popul == "service") 
+<td id="colorthree">{{ $event->service}}</td>
+@elseif ($event->popul == NULL) 
+<td id="colorfour">matricule</td>
+@endif
+
+
+                            
+                                    <td>{{ $event->codebud->abreviation }}</td>
+
                                     <td>{{ $event->annee}}</td>
                                     <td>{{ $event->mois}}</td>
                                     <td>{{ $event->nbr_mois}}</td>
                                     <td>{{ $event->montant}}</td>
-                                    <td>{{ $event->service}}</td>
-                                    <td>{{ $event->matricule}}</td>
-                                    <td>{{ $event->csociopros->code }}</td>
-                                    <td>{{ $event->coderegsegs->code }}</td>
-                                    <td>{{ $event->catprofs->code }}</td>
+                                                                     
+                                
                                     <td>
                                  
                                
@@ -463,13 +475,12 @@ aria-hidden="true">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="scenarii/destroy" method="post">
+            <form action="scenarii/destroy_ev" method="post">
                 {{ method_field('delete') }}
                 {{ csrf_field() }}
                 <div class="modal-body">
                     <p>  Etes vous sur de vouloir supprimer cet evenement? </p><br>
                     <input type="hidden" name="pro_id" id="pro_id" value="">
-                    <input class="form-control" name="etab_nom" id="etab_nom" type="text" readonly>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
@@ -567,10 +578,10 @@ $('#modaldemo9').on('show.bs.modal', function(event) {
       $("select.populations").change(function(){
         var choixpopu = $(this).children("option:selected").val();
       if (choixpopu =="csp"){
-        document.getElementById("csp").required = true;
+        document.getElementById("csp_id").required = true;
         document.getElementById("csp_id").hidden = false;
 
-        document.getElementById("catpro").required = false;
+        document.getElementById("catpro_id").required = false;
         document.getElementById("cat_id").hidden = true;
 
         document.getElementById("service").required = false;
@@ -578,10 +589,10 @@ $('#modaldemo9').on('show.bs.modal', function(event) {
  
       }
  if (choixpopu =="cat"){
-        document.getElementById("csp").required = false;
+        document.getElementById("csp_id").required = false;
         document.getElementById("csp_id").hidden = true;
 
-        document.getElementById("catpro").required = true;
+        document.getElementById("catpro_id").required = true;
         document.getElementById("cat_id").hidden = false;
 
         document.getElementById("service").required = false;
@@ -589,10 +600,10 @@ $('#modaldemo9').on('show.bs.modal', function(event) {
     
       }
  if (choixpopu =="service"){
-        document.getElementById("csp").required = false;
+        document.getElementById("csp_id").required = false;
         document.getElementById("csp_id").hidden = true;
 
-        document.getElementById("catpro").required = false;
+        document.getElementById("catpro_id").required = false;
         document.getElementById("cat_id").hidden = true;
 
         document.getElementById("service").required = true;

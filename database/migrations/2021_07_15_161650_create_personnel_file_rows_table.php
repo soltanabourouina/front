@@ -24,7 +24,7 @@ class CreatePersonnelFileRowsTable extends Migration
             $table->date('date_de_naissance');
             $table->date('date_anciennete');
             $table->date('date_de_sortie')->nullable();
-           // $table->string('l_etab')->nullable();
+            $table->string('idposte')->nullable(); //take matricule value by default
             $table->string('nature_contrat')->nullable();
             $table->string('type_contrat');
             $table->string('c_classification')->nullable();

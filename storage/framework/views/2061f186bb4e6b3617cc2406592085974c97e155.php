@@ -4,8 +4,29 @@
     .ui-datepicker-calendar {
     display: none;
     }
+
+    #colorone {
+    background-color: #00d2fc;
+    color: #000000;
+   }
+
+   #colortwo {
+    background-color: #4ffbdf;
+    color: #000000;
+   }
+
+   #colorthree {
+    background-color: #9ad4d0;
+    color: #000000;
+   }
+
+   #colorfour {
+    background-color: #fbeaff;
+    color: #000000;
+   }
 </style>
-    <!--Internal   Notify -->
+
+  <!--Internal   Notify -->
     <link href="<?php echo e(URL::asset('assets/plugins/notify/css/notifIt.css')); ?>" rel="stylesheet" />
 <?php $__env->startSection('title'); ?>
 Budget|scenarii|projection
@@ -144,7 +165,7 @@ Budget|scenarii|projection
 
                         <?php echo e($budgetM12 = Helpers::showMonetaryValue($budM12->Sum('amount'))); ?>
 
-                        <td width=10% >Budget initiale</td>
+                        <td width=10% >Budget initial</td>
                         <td><?php echo e(($budgetM1)); ?></td>
                         <td><?php echo e($budgetM2); ?></td>
                         <td><?php echo e($budgetM3); ?></td>
@@ -164,7 +185,7 @@ Budget|scenarii|projection
                       
                     </tr>
 <!--effectif-->
-<td width=10% >Effectif initiale</td>
+<td width=10% >Effectif initial</td>
                         <td>0</td>
                         <td>0</td>
                         <td>0</td>
@@ -209,7 +230,7 @@ Budget|scenarii|projection
                             </TR>
 
 
-                            <TR >
+                            <TR>
                                 <td>EFF</td>
 <td>0</td>
                         <td>0</td>
@@ -276,7 +297,7 @@ aria-hidden="true">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <form action="<?php echo e(route('scenarii.store_ev')); ?>" method="post">
+        <form action="<?php echo e(route('scenarii.store')); ?>" method="post">
             <?php echo e(csrf_field()); ?>
 
             
@@ -315,7 +336,7 @@ aria-hidden="true">
 <br>
                 <div id="csp_id" class="col-lg-10" hidden>
                 <label for="csp">Catégorie Socio-pro</label>
-                <select name="csp" id="csp" class="form-control" required>
+                <select name="csp_id" id="csp_id" class="form-control" required>
                     <option value="" selected disabled> --indiquer le CSP--</option>
                     <?php $__currentLoopData = $csociopros; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $csociopro): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <option value="<?php echo e($csociopro->id); ?>"><?php echo e($csociopro->abreviation); ?>-<?php echo e($csociopro->libelle); ?></option>
@@ -325,7 +346,7 @@ aria-hidden="true">
 
                 <div id="cat_id" class="col-lg-10" hidden>
                     <label for="catpro">Catégorie pro</label>
-                    <select name="catpro" id="catpro" class="form-control" required>
+                    <select name="catpro_id" id="catpro_id" class="form-control" required>
                         <option value="" selected disabled> --indiquer la catégorie--</option>
                        <?php $__currentLoopData = $catprofs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $catprof): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <option value="<?php echo e($catprof->id); ?>"><?php echo e($catprof->code); ?>-<?php echo e($catprof->nom); ?></option>
@@ -346,7 +367,7 @@ aria-hidden="true">
 <br>
                     <div id="bud_id" class="col-lg-10" >
                     <label for="codebud">Code Budget</label>
-                    <select name="codebud" id="codebud" class="form-control" required>
+                    <select name="codebud_id" id="codebud_id" class="form-control" required>
                         <option value="" selected disabled> --indiquer le code budgétaire--</option>
                         <?php $__currentLoopData = $coderegsegs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $coderegseg): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <option value="<?php echo e($coderegseg->id); ?>"><?php echo e($coderegseg->abreviation); ?>-<?php echo e($coderegseg->libelle_secondaires); ?></option>
@@ -363,11 +384,11 @@ aria-hidden="true">
                
                     <div class="form-group col-lg-6">
                     <label for="annee">Année *</label>
-                    <input class="annee form-control" required  type="text">
+                    <input class="annee form-control" required id="annee" name="annee" type="number">
                 </div>
                 <div class="form-group col-lg-6">
                     <label for="montant">mois *</label>
-                    <input class="mois form-control" required  type="text">
+                    <input class="mois form-control" required  id="mois" name="mois" type="number">
                 </div>
                     <div class="form-group col-lg-6">
                     <label for="duree_estime" >Durée</label>
@@ -381,7 +402,6 @@ aria-hidden="true">
              
 
                
-            </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-success">Valider</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
@@ -417,16 +437,17 @@ aria-hidden="true">
                               
                                 <th>#</th>
 							
-                                <th>Matricule </th>
+                                <th>Population / Matricule </th>
                                 
-                                <th>CSP</th>
-                                <th>Cat pro</th>
-                                <th>Service</th>
+                                <th>Filtre sur: </th>
+                              
+
                                 <th>Code budget</th>
-                                <th>Montant</th>
+                               
                                 <th>Année</th>
                                 <th>Mois</th>
                                 <th>Durée</th>
+                                <th>Montant</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -435,15 +456,36 @@ aria-hidden="true">
                             <?php $__currentLoopData = $events; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $event): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                      <tr>
                                     <td><?php echo e(++$i); ?></td>
+
+                                    <?php if( $event->choixpop == 1): ?>
+                                    <td><?php echo e($event->matricule); ?></td>
+                                    <?php elseif( $event->choixpop == 2): ?>
+                                    <td><?php echo e($event->popul); ?></td>
+                                    <?php endif; ?> 
+
+
+<?php if($event->popul == "cat"): ?> 
+<td id="colorone"><?php echo e($event->catpro->nom); ?></td>
+
+<?php elseif($event->popul == "csp"): ?> 
+<td id="colortwo"><?php echo e($event->csp->libelle); ?></td>
+
+<?php elseif($event->popul == "service"): ?> 
+<td id="colorthree"><?php echo e($event->service); ?></td>
+<?php elseif($event->popul == NULL): ?> 
+<td id="colorfour">matricule</td>
+<?php endif; ?>
+
+
+                            
+                                    <td><?php echo e($event->codebud->abreviation); ?></td>
+
                                     <td><?php echo e($event->annee); ?></td>
                                     <td><?php echo e($event->mois); ?></td>
                                     <td><?php echo e($event->nbr_mois); ?></td>
                                     <td><?php echo e($event->montant); ?></td>
-                                    <td><?php echo e($event->service); ?></td>
-                                    <td><?php echo e($event->matricule); ?></td>
-                                    <td><?php echo e($event->csociopros->code); ?></td>
-                                    <td><?php echo e($event->coderegsegs->code); ?></td>
-                                    <td><?php echo e($event->catprofs->code); ?></td>
+                                                                     
+                                
                                     <td>
                                  
                                
@@ -475,7 +517,7 @@ aria-hidden="true">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="scenarii/destroy" method="post">
+            <form action="scenarii/destroy_ev" method="post">
                 <?php echo e(method_field('delete')); ?>
 
                 <?php echo e(csrf_field()); ?>
@@ -483,7 +525,6 @@ aria-hidden="true">
                 <div class="modal-body">
                     <p>  Etes vous sur de vouloir supprimer cet evenement? </p><br>
                     <input type="hidden" name="pro_id" id="pro_id" value="">
-                    <input class="form-control" name="etab_nom" id="etab_nom" type="text" readonly>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
@@ -581,10 +622,10 @@ $('#modaldemo9').on('show.bs.modal', function(event) {
       $("select.populations").change(function(){
         var choixpopu = $(this).children("option:selected").val();
       if (choixpopu =="csp"){
-        document.getElementById("csp").required = true;
+        document.getElementById("csp_id").required = true;
         document.getElementById("csp_id").hidden = false;
 
-        document.getElementById("catpro").required = false;
+        document.getElementById("catpro_id").required = false;
         document.getElementById("cat_id").hidden = true;
 
         document.getElementById("service").required = false;
@@ -592,10 +633,10 @@ $('#modaldemo9').on('show.bs.modal', function(event) {
  
       }
  if (choixpopu =="cat"){
-        document.getElementById("csp").required = false;
+        document.getElementById("csp_id").required = false;
         document.getElementById("csp_id").hidden = true;
 
-        document.getElementById("catpro").required = true;
+        document.getElementById("catpro_id").required = true;
         document.getElementById("cat_id").hidden = false;
 
         document.getElementById("service").required = false;
@@ -603,10 +644,10 @@ $('#modaldemo9').on('show.bs.modal', function(event) {
     
       }
  if (choixpopu =="service"){
-        document.getElementById("csp").required = false;
+        document.getElementById("csp_id").required = false;
         document.getElementById("csp_id").hidden = true;
 
-        document.getElementById("catpro").required = false;
+        document.getElementById("catpro_id").required = false;
         document.getElementById("cat_id").hidden = true;
 
         document.getElementById("service").required = true;

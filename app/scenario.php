@@ -11,7 +11,5 @@ class scenario extends Model
        
     ];
 
-    public function postedepenses(){
-        return $this->belongsToMany(postedepense::class);
-    }
+   
 }

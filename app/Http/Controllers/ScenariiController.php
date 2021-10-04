@@ -10,7 +10,7 @@ use App\departements;
 use App\Employe;
 use App\etablissements;
 use App\PersonnelFileRow;
-use App\postedepense;
+//use App\postedepense;
 use App\scenario;
 use DateTime;
 use App\evenement;
@@ -82,7 +82,7 @@ class ScenariiController extends Controller
    GROUP BY month"));
  // $eff=BudgetPayrollRow :: count('employee_ref');    
 //dd($eff);
-      
+
 
 
         return view('scenarii.index', compact('scenarios','events','coderegsegs','csociopros','catprofs','services','budM1',
@@ -112,22 +112,13 @@ class ScenariiController extends Controller
      */
     public function store(Request $request)
     {
-         scenario::create($request->all());
-      //  return view('scenario.index', compact('scenario'));
-        
-        session()->flash('Add', 'Ajouté avec succés');
-        return redirect('/scenarii');
-    }
-   
-
-    public function store_ev(Request $request)
-    {
-         evenement::create($request->all());
+        evenement::create($request->all());
      
         
         session()->flash('Add', 'Ajouté avec succés');
         return redirect('/scenarii');
     }
+
 
     /**
      * Display the specified resource.
@@ -184,6 +175,13 @@ class ScenariiController extends Controller
     {
          $scenario = scenario::findOrFail($request->pro_id);
          $scenario->delete();
+         session()->flash('delete', 'supprimé avec succés');
+         return back();
+    }
+    public function destroy_ev(Request $request)
+    {
+         $events = evenement::findOrFail($request->pro_id);
+         $events->delete();
          session()->flash('delete', 'supprimé avec succés');
          return back();
     }

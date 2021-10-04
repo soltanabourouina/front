@@ -17,6 +17,8 @@ class CreateBudgetPayrollRowsTable extends Migration
             $table->id();
             $table->integer('year');
             $table->integer('month');
+            $table->string('numbud')->nullable();
+            $table->boolean('suivi')->default('0');
             $table->string('employee_ref');
             $table->foreign('employee_ref', 'budget_payroll_row_employee')->references('ref')->on('employes')->onDelete('cascade')->onUpdate('cascade');
             $table->string('code_regroupement_secondaire');

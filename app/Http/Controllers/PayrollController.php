@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\CorrespondanceLigneBudgetaire;
 use App\Event;
 use App\Employe;
+use App\etablissements;
 use App\PayrollRow;
 use Illuminate\Http\Request;
 
@@ -24,9 +25,11 @@ class PayrollController extends Controller
         $code_secondaire = CorrespondanceLigneBudgetaire::codeSecondaireFromCodeClient($payrollLine->codeRubrique, $variant);
         if ($code_secondaire == null) return;
 
+        $etab = etablissements::findByCode($employee->contract()->etab);
         $payrollRow = PayrollRow::where([
             'year' => $payrollLine->year,
             'month' => $payrollLine->month,
+            'etab' =>$etab->code,
             'employee_ref' => $employee->ref,
             'code_regroupement_secondaire' => $code_secondaire->abreviation,
         ])->first();
@@ -41,6 +44,7 @@ class PayrollController extends Controller
 
                 'year' => $payrollLine->year,
                 'month' => $payrollLine->month,
+                'etab' =>$etab->code,
                 'employee_ref' => $employee->ref,
                 'code_regroupement_secondaire' => $code_secondaire->abreviation,
                 'amount' => $payrollLine->montantSalarial,

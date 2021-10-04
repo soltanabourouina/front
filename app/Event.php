@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Exceptions\UnknownEventTypeException;
 use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model

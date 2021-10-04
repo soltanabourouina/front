@@ -18,6 +18,9 @@ class CreateZonesTable extends Migration
             $table->mediumText('code');
             $table->mediumText('libelle');
             $table->timestamps();
+
+            session()->flash('Add', 'Ajouté avec succés');
+        return redirect('/zones');
         });
     }
 
